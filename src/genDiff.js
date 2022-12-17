@@ -22,7 +22,6 @@ export default (filepath1, filepath2) => {
     }
     return acc;
   }, []);
-
   const result = ['{', ...diff, '}'].join('\n');
   return result;
 };
