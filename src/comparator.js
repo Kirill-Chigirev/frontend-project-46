@@ -1,16 +1,9 @@
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import fs from 'fs';
 import _ from 'lodash';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
-const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf8');
+import parser from './parser.js';
 
 export default (filename1, filename2) => {
-  const file1 = JSON.parse(readFile(filename1));
-  const file2 = JSON.parse(readFile(filename2));
+  const file1 = parser(filename1);
+  const file2 = parser(filename2);
   const file1Keys = Object.keys(file1);
   const file2Keys = Object.keys(file2);
   const filesKeys = [...file1Keys, ...file2Keys];
