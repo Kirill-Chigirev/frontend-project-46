@@ -1,4 +1,4 @@
-import parser from '../src/parser.js';
+import parse from '../src/parse.js';
 
 let parsedFile;
 
@@ -8,7 +8,7 @@ beforeAll(() => {
   };
 });
 
-test('parser', () => {
-  expect(parser('file1.json')).toEqual(parsedFile);
-  expect(parser('file1.yml')).toEqual(parsedFile);
+test('parse', () => {
+  expect(parse('file1.json')).toEqual(parsedFile);
+  expect(parse('file1.yml')).toEqual(parsedFile);
 });

@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf8');
 
-const parse = (filepath) => {
+export default (filepath) => {
   const extension = path.extname(filepath);
   let result;
   if (extension === '.json') {
@@ -19,5 +19,3 @@ const parse = (filepath) => {
 
   return result;
 };
-
-export default parse;

@@ -1,4 +1,3 @@
-import comparator from './src/comparator.js';
-import parser from './src/parser.js';
+import gendiff from './src/gendiff.js';
 
-export { comparator, parser };
+export default gendiff;

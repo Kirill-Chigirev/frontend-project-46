@@ -1,12 +1,9 @@
-import comparator from '../src/comparator.js';
+import fs from 'fs';
+import gendiff from '../src/gendiff.js';
 
-let flatFileDiff;
+const result = fs.readFileSync('./__fixtures__/result.txt', 'utf-8');
 
-beforeAll(() => {
-  flatFileDiff = '{\n- follow: false\n  host: hexlet.io\n- proxy: 123.234.53.22\n- timeout: 50\n+ timeout: 20\n+ verbose: true\n}';
-});
-
-test('comparator', () => {
-  expect(comparator('file1.json', 'file2.json')).toEqual(flatFileDiff);
-  expect(comparator('file1.yml', 'file2.yml')).toEqual(flatFileDiff);
+test('gendiff', () => {
+  expect(gendiff('file1.json', 'file2.json')).toEqual(result);
+  expect(gendiff('file1.yml', 'file2.yml')).toEqual(result);
 });
