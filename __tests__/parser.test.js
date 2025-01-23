@@ -1,14 +1,14 @@
-import parse from '../src/parse.js';
+import parseFile from '../src/parser.js';
 
-let parsedFile;
+let parseFiledFile;
 
 beforeAll(() => {
-  parsedFile = {
+  parseFiledFile = {
     host: 'hexlet.io', timeout: 50, proxy: '123.234.53.22', follow: false,
   };
 });
 
-test('parse', () => {
-  expect(parse('file1.json')).toEqual(parsedFile);
-  expect(parse('file1.yml')).toEqual(parsedFile);
+test('parseFile', () => {
+  expect(parseFile('file1.json')).toEqual(parseFiledFile);
+  expect(parseFile('file1.yml')).toEqual(parseFiledFile);
 });
