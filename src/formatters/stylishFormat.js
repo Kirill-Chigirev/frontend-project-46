@@ -1,3 +1,5 @@
+// import _ from 'lodash';
+
 const formatter = (difference) => {
   const result = [];
 
@@ -20,6 +22,7 @@ const formatter = (difference) => {
           result.push(`  ${indent.repeat(depth)}+ ${key}: ${value}`);
           break;
         case 'unchanged':
+          result.push(`    ${indent.repeat(depth)}${key}: ${value}`);
           break;
         case 'hasChild':
           result.push(`    ${indent.repeat(depth)}${key}: {`);

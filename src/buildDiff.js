@@ -29,7 +29,7 @@ const buildDiff = (obj1, obj2) => {
       type: 'changed',
     };
   });
-
+  console.log(JSON.stringify(resultObj, null, 2));
   return resultObj;
 };
 
