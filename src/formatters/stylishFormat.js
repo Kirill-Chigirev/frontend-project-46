@@ -1,4 +1,4 @@
-// import _ from 'lodash';
+import _ from 'lodash';
 
 const formatter = (difference) => {
   const result = [];
@@ -6,20 +6,33 @@ const formatter = (difference) => {
   const iter = (data, depth) => {
     const indent = '    ';
 
+    const stringify = (value, newDepth) => {
+      if (!_.isObject(value)) {
+        return value;
+      }
+
+      const currentResult = Object.keys(value).sort().map((key) => {
+        const string = `    ${key}: ${stringify(value[key], newDepth + 1)}`;
+        return `${indent.repeat(newDepth)}${string}`;
+      });
+
+      return `{\n${currentResult.join('\n')}\n${indent.repeat(newDepth)}}`;
+    };
+
     data.forEach((item) => {
       const {
         key, type, firstValue, value,
       } = item;
       switch (type) {
         case 'added':
-          result.push(`  ${indent.repeat(depth)}+ ${key}: ${value}`);
+          result.push(`  ${indent.repeat(depth)}+ ${key}: ${stringify(value, depth + 1)}`);
           break;
         case 'deleted':
-          result.push(`  ${indent.repeat(depth)}- ${key}: ${value}`);
+          result.push(`  ${indent.repeat(depth)}- ${key}: ${stringify(value, depth + 1)}`);
           break;
         case 'changed':
-          result.push(`  ${indent.repeat(depth)}- ${key}: ${firstValue}`);
-          result.push(`  ${indent.repeat(depth)}+ ${key}: ${value}`);
+          result.push(`  ${indent.repeat(depth)}- ${key}: ${stringify(firstValue, depth + 1)}`);
+          result.push(`  ${indent.repeat(depth)}+ ${key}: ${stringify(value, depth + 1)}`);
           break;
         case 'unchanged':
           result.push(`    ${indent.repeat(depth)}${key}: ${value}`);
