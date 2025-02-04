@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const formatter = (difference) => {
+export default (difference) => {
   const result = [];
 
   const iter = (data, depth) => {
@@ -52,5 +52,3 @@ const formatter = (difference) => {
 
   return `{\n${result.join('\n')}\n}`;
 };
-
-export default formatter;
