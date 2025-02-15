@@ -19,6 +19,9 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const file1 = parseFile(getExtension(filepath1), readfile(filepath1));
   const file2 = parseFile(getExtension(filepath2), readfile(filepath2));
   const diffTree = buildDiff(file1, file2);
+  if (format === 'json') {
+    return JSON.stringify(diffTree[0], null, 2);
+  }
   return formatter(format)(diffTree);
 };
 
