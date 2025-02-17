@@ -1,8 +1,6 @@
 import _ from 'lodash';
 
 export default (difference) => {
-  const result = [];
-
   const iter = (data, depth) => {
     const indent = '    ';
 
@@ -19,36 +17,30 @@ export default (difference) => {
       return `{\n${currentResult.join('\n')}\n${indent.repeat(newDepth)}}`;
     };
 
-    data.forEach((item) => {
+    const result = data.map((item) => {
       const {
         key, type, firstValue, value,
       } = item;
       switch (type) {
         case 'added':
-          result.push(`  ${indent.repeat(depth)}+ ${key}: ${stringify(value, depth + 1)}`);
-          break;
+          return `  ${indent.repeat(depth)}+ ${key}: ${stringify(value, depth + 1)}`;
         case 'deleted':
-          result.push(`  ${indent.repeat(depth)}- ${key}: ${stringify(value, depth + 1)}`);
-          break;
+          return `  ${indent.repeat(depth)}- ${key}: ${stringify(value, depth + 1)}`;
         case 'changed':
-          result.push(`  ${indent.repeat(depth)}- ${key}: ${stringify(firstValue, depth + 1)}`);
-          result.push(`  ${indent.repeat(depth)}+ ${key}: ${stringify(value, depth + 1)}`);
-          break;
+          return `  ${indent.repeat(depth)}- ${key}: ${stringify(firstValue, depth + 1)}\n  ${indent.repeat(depth)}+ ${key}: ${stringify(value, depth + 1)}`;
         case 'unchanged':
-          result.push(`    ${indent.repeat(depth)}${key}: ${value}`);
-          break;
+          return `    ${indent.repeat(depth)}${key}: ${value}`;
         case 'hasChild':
-          result.push(`    ${indent.repeat(depth)}${key}: {`);
-          iter(value, depth + 1);
-          result.push(`    ${indent.repeat(depth)}}`);
-          break;
+          return `    ${indent.repeat(depth)}${key}: {\n${iter(value, depth + 1)}\n    ${indent.repeat(depth)}}`;
         default:
-          break;
+          throw Error('нет такого типа');
       }
     });
+
+    return result.join('\n');
   };
 
-  iter(difference, 0);
+  const result = iter(difference, 0);
 
-  return `{\n${result.join('\n')}\n}`;
+  return `{\n${result}\n}`;
 };
