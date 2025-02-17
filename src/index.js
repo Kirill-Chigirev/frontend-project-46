@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'url';
 import path from 'path';
 import { readFileSync } from 'fs';
 import parseFile from './parser.js';
@@ -6,9 +5,7 @@ import buildDiff from './buildDiff.js';
 import formatter from './formatters/index.js';
 
 const readfile = (filepath) => {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  const absolutePath = path.join(__dirname, '..', filepath);
+  const absolutePath = path.resolve(process.cwd(), filepath);
   const content = readFileSync(absolutePath, 'utf-8');
   return content;
 };
