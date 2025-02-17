@@ -9,7 +9,9 @@ export default (difference) => {
         return value;
       }
 
-      const currentResult = Object.keys(value).sort().map((key) => {
+      const sortedKeys = _.sortBy(Object.keys(value));
+
+      const currentResult = sortedKeys.map((key) => {
         const string = `    ${key}: ${stringify(value[key], newDepth + 1)}`;
         return `${indent.repeat(newDepth)}${string}`;
       });
