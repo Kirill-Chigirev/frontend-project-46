@@ -1,8 +1,6 @@
 import _ from 'lodash';
 
 export default (difference) => {
-  const result = [];
-
   const iter = (data, path) => {
     const stringify = (value) => {
       if (_.isObject(value)) {
@@ -11,33 +9,31 @@ export default (difference) => {
       return (typeof value === 'string') ? `'${value}'` : value;
     };
 
-    data.forEach((item) => {
+    const result = data.map((item) => {
       const {
         key, type, firstValue, value,
       } = item;
       const buildPath = () => (path === '' ? key : `${path}.${key}`);
       switch (type) {
         case 'added':
-          result.push(`Property '${buildPath()}' was added with value: ${stringify(value)}`);
-          break;
+          return `Property '${buildPath()}' was added with value: ${stringify(value)}\n`;
         case 'deleted':
-          result.push(`Property '${buildPath()}' was removed`);
-          break;
+          return `Property '${buildPath()}' was removed\n`;
         case 'changed':
-          result.push(`Property '${buildPath()}' was updated. From ${stringify(firstValue)} to ${stringify(value)}`);
-          break;
+          return `Property '${buildPath()}' was updated. From ${stringify(firstValue)} to ${stringify(value)}\n`;
         case 'unchanged':
-          break;
+          return null;
         case 'hasChild':
-          iter(value, buildPath());
-          break;
+          return iter(value, buildPath());
         default:
-          break;
+          throw Error('нет такого типа');
       }
     });
+
+    return result.join('');
   };
 
-  iter(difference, '');
+  const result = iter(difference, '');
 
-  return result.join('\n');
+  return result.trim();
 };
