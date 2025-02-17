@@ -8,7 +8,7 @@ import formatter from './formatters/index.js';
 const readfile = (filepath) => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const absolutePath = path.join(__dirname, '..', '__fixtures__', filepath);
+  const absolutePath = path.join(__dirname, '..', filepath);
   const content = readFileSync(absolutePath, 'utf-8');
   return content;
 };
