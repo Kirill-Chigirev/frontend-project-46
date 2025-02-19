@@ -1,14 +1,14 @@
 import _ from 'lodash';
 
+const stringify = (value) => {
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  return (typeof value === 'string') ? `'${value}'` : value;
+};
+
 export default (difference) => {
   const iter = (data, path) => {
-    const stringify = (value) => {
-      if (_.isObject(value)) {
-        return '[complex value]';
-      }
-      return (typeof value === 'string') ? `'${value}'` : value;
-    };
-
     const result = data.map((item) => {
       const {
         key, type, firstValue, value,
@@ -26,7 +26,7 @@ export default (difference) => {
         case 'hasChild':
           return iter(value, buildPath());
         default:
-          throw Error('нет такого типа');
+          throw Error('There is no such type');
       }
     });
 

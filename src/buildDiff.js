@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const buildDiff = (obj1, obj2) => {
   const sortedUniqKeys = _.sortBy(_.union(Object.keys(obj1), Object.keys(obj2)));
-  const resultObj = sortedUniqKeys.map((key) => {
+  return sortedUniqKeys.map((key) => {
     const value1 = obj1[key];
     const value2 = obj2[key];
 
@@ -29,7 +29,6 @@ const buildDiff = (obj1, obj2) => {
       type: 'changed',
     };
   });
-  return resultObj;
 };
 
 export default buildDiff;

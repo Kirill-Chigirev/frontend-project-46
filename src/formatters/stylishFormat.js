@@ -1,24 +1,21 @@
 import _ from 'lodash';
 
+const indent = '    ';
+
+const stringify = (value, newDepth) => {
+  if (!_.isObject(value)) {
+    return value;
+  }
+  const sortedKeys = _.sortBy(Object.keys(value));
+  const currentResult = sortedKeys.map((key) => {
+    const string = `    ${key}: ${stringify(value[key], newDepth + 1)}`;
+    return `${indent.repeat(newDepth)}${string}`;
+  });
+  return `{\n${currentResult.join('\n')}\n${indent.repeat(newDepth)}}`;
+};
+
 export default (difference) => {
   const iter = (data, depth) => {
-    const indent = '    ';
-
-    const stringify = (value, newDepth) => {
-      if (!_.isObject(value)) {
-        return value;
-      }
-
-      const sortedKeys = _.sortBy(Object.keys(value));
-
-      const currentResult = sortedKeys.map((key) => {
-        const string = `    ${key}: ${stringify(value[key], newDepth + 1)}`;
-        return `${indent.repeat(newDepth)}${string}`;
-      });
-
-      return `{\n${currentResult.join('\n')}\n${indent.repeat(newDepth)}}`;
-    };
-
     const result = data.map((item) => {
       const {
         key, type, firstValue, value,
@@ -35,10 +32,9 @@ export default (difference) => {
         case 'hasChild':
           return `    ${indent.repeat(depth)}${key}: {\n${iter(value, depth + 1)}\n    ${indent.repeat(depth)}}`;
         default:
-          throw Error('нет такого типа');
+          throw Error('There is no such type');
       }
     });
-
     return result.join('\n');
   };
 
