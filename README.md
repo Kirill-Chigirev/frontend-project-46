@@ -1,15 +1,20 @@
 # Gendiff 
 The program compares two configuration files and shows a difference.
 
+## Setup
+```shell
+make install
+```
+
+## Run tests
+```shell
+make test
+```
+
+## Usage
 ```shell
 gendiff -h
 ```
-
-## Setup
-make install
-
-## Run tests
-make test
 
 ## Example
 
